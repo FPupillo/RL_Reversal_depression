@@ -24,12 +24,12 @@ simulate_RW_pav_2alpha_beta<-function (Data,alpha=NULL,  alphapos,
     Data[[paste("V", n, sep="")]]<-NA
     
     # Ps (probabilities for each category's choice)
-    Data[[paste("P", n, sep="")]]<-NA
+    #Data[[paste("P", n, sep="")]]<-NA
     
   }
   
   # probability for the choice that participants' made on a trial
-  Data$Prob<-NA
+  #Data$Prob<-NA
   
   # Delta, prediction error
   Data$Delta<-NA
@@ -42,49 +42,67 @@ simulate_RW_pav_2alpha_beta<-function (Data,alpha=NULL,  alphapos,
   
   # index variables for Q, P, and Delta
   Vindex<-c("V1", "V2")
-  Pindex<-c("P1", "P2") 
+  #Pindex<-c("P1", "P2") 
 
   # Counter for indicating which character has to be updated
   count<-rep(0, 2)
   
   # initialise choice probability and counter for the choiceprobability
-  prob<-NA
+  #prob<-NA
   
   V<-rep(initialV, 2)
+  Data[1, Vindex]<-V
+  # get the highlighted 
   
   # loop over trials
   for (t in 1:nrow(Data)){
 
     # update choice probabilities using the softmax distribution
-    p<-softmax(V, beta)
+    #p<-softmax(V, beta)
     
-    # make choice according to choice probabilities
-    Data$response[t] <- chooseBinomial(p)
+    # make choice 
+    #Data$response[t] <- chooseBinomial(p)
     
-    Data$reward[t]<-as.numeric(
-      Data[t, c("reward_symbol1", "reward_symbol2")][Data$response[t]]
-    )
+    # if the probe is left, 1, else,2
+    which_symb<-ifelse(Data$outcome_probe[t]=="symbol_left", 1,2)
+    
+    Data$response[t]<-V[which_symb]
+    
+    Data$reward[t]<-ifelse(Data$outcome_probe[t] == 'symbol_left',
+                     Data$outcome_symbol1[t], Data$outcome_symbol2[t])
     
     # get the observation as 1 if that category is present, and 0 if it is not
-    if ( Data$reward[t]>0){
-      alpha <- alphapos
-    } else {
-      alpha<-alphaneg
+    if (Data$switch_cond[t]=="reward" | Data$switch_cond[t]=="punTorew"){
+      if ( Data$reward[t]>0){
+        alpha <- alphapos
+        Data$reward[t]<-1
+      } else {
+        alpha<-alphaneg
+        Data$reward[t]<-0
+      }
+    } else{
+      if ( Data$reward[t]<0){
+        alpha <- alphaneg
+        Data$reward[t]<-0
+      } else {
+        alpha<-alphapos
+        Data$reward[t]<-1
+      }  
+      
     }
     
     # update values
-    updateVal<-update_RW(r = Data$reward[t], V = V[Data$response[t]], alpha = alpha)
+    updateVal<-update_RW(r = Data$reward[t], V = Data$response[t], alpha = alpha)
     
     # update V
-    V[Data$response[t]]<-updateVal$V
+    V[which_symb]<-updateVal$V
 
-    
     # assign it to the dataset
     Data$Delta[t]<-updateVal$delta
     
     # assign values to the dataset
     Data[t, Vindex]<-V
-    Data[t, Pindex]<-p
+    #Data[t, Pindex]<-p
     
   }
   

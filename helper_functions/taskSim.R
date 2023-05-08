@@ -8,9 +8,11 @@ taskSim<-function(
     # probability of losses for the loss symbol
     Ploss = 0.80,
     # number of switches
-    Nswitch = 2,
+    Nswitch = 1,
+    # order switches
+    ord = "rewTopun", # alternative is punTorew
     # number of trial between switches 
-    Ntrials =20
+    Ntrials =30
 ){
   
   # define the symbols
@@ -25,39 +27,58 @@ taskSim<-function(
   
 names(df)<-c("trialN", "symbol_left", "symbol_right") 
 
-# create the switch
-df$switch_cond<-rep(c(1:(Nswitch+1)), each = Ntrials)
+# # create the switch
+# ord_both<-c("rewTopun", "punTorew")
+# if(ord_both[1]==ord){
+
+if(ord == "rewTopun"){  
+
+df$switch_cond<-rep(c("reward", ord) , each = Ntrials)
+
+}else{
+  df$switch_cond<-rep(c("punishment", ord) , each = Ntrials)
+}
+
+
+# } else{
+#   
+#   df$switch_cond<-rep(c("punTorew", "rewTopun") , each = Ntrials)
+#   
+# }
 
 # create the reward for each symbol
-df$reward_symbol1<-NA
-df$reward_symbol2<-NA
-df$optimal_response<-NA
+df$outcome_symbol1<-NA
+df$outcome_symbol2<-NA
+#df$outcome_response<-NA
 
 # counter for the trials
 counter_trial<-1
 
 # invert the prob
 probs<-matrix(ncol=4, nrow = (Nswitch+1))
+
+rew_loss<-if (ord == "rewTopun"){c(1, -1)}else{ c(-1,1)}
+
 for (n in 1:(Nswitch+1)){
   if (n%%2!=0){
     
-    probs[n,]<-c(1,0, 0,1)
+    probs[n,]<-c(rew_loss[n], 0 ,0, rew_loss[n])
     
   } else
     
-    probs[n,]<-c(0,1,1,0)
+    probs[n,]<-c(rew_loss[n],0,0, rew_loss[n])
   
 }
 
 for (block in 1:(Nswitch+1)){
   
 
-  df$reward_symbol1[counter_trial:(counter_trial+(Ntrials-1))]<-
+  df$outcome_symbol1[counter_trial:(counter_trial+(Ntrials-1))]<-
     sample(probs[block,1:2],Ntrials, prob = c(Preward, 1-Preward),
                             replace = T)
   
   
-  df$reward_symbol2[counter_trial:(counter_trial+(Ntrials-1))]<-
+  df$outcome_symbol2[counter_trial:(counter_trial+(Ntrials-1))]<-
     sample(probs[block,3:4],Ntrials, prob = c(Preward, 1-Preward),
            replace = T)
   

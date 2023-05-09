@@ -10,7 +10,7 @@ chooseBinomial <- function(p){
   # Output
   #   a : a vector indicating the choice
   # ------------------
-  a<-sample(c(1,2),1, p, replace =T)
+  a<-sample(c(1,0),1, p, replace =T)
   
   # transform the matrix into a vector
   #a<-a[,1]

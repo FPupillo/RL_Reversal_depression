@@ -9,7 +9,7 @@ do
 
 echo $model
 
-Rscript param_recov.R $model &
+Rscript param_recov.R $model 
 
 wait
 

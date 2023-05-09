@@ -40,10 +40,9 @@ for (model in list.files("fitting_functions")){
 }
 
 
-
 model<-Args<-commandArgs(trailingOnly = T) 
 
-model<-"RW_pav_alpha_gainloss_rho_gainloss"
+model<-"RW_pav_alpha_gainloss"
 
 sim_model<-get(paste0("simulate_", model))
 fit_model<-get(paste0("fit_", model))
@@ -159,7 +158,10 @@ dat<-foreach (s=1:simul, .combine=rbind)  %dopar% {
         }
       }
       
-
+     
+      print(paste("completed sim ", s))
+      
+      
       # sim_all[s, ]
      all_data<-c(alpha[s], fitalpha, alphagain[s], fitalphagain, 
                       alphaloss[s],  fitalphaloss, rho[s], fitrho, 
@@ -167,10 +169,11 @@ dat<-foreach (s=1:simul, .combine=rbind)  %dopar% {
       
      all_data
      
-    setTxtProgressBar(pb, s) 
       
-      }
-  
+}
+
+stopCluster(cl)
+
 
 sim_all<-data.frame(dat)
 
@@ -179,6 +182,12 @@ names(sim_all)<-c( "sim_alpha", "fit_alpha", "sim_alphagain", "fit_alphagain",
                    "sim_alphaloss","fit_alphaloss", "sim_rho", "fit_rho", 
                    "sim_rhogain", "fit_rhogain", "sim_rholoss", "fit_rholoss")  
 
+# get what are the parameters that are important
+fitpar<-names(sim_all[1,])[substr(names(sim_all), 1, 3)=="fit"]
+
+# parameters of interest
+PoI<-fitpar[!is.na(sim_all[1,fitpar])]
+
 # save the file
-save( list=ls(),file=paste0("output_folder/param_recovery_", modelname, ".Rdata"))
+save( list=ls(),file=paste0("output_folder/param_recovery_", model, ".Rdata"))
 

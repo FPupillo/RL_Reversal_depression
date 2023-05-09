@@ -1,6 +1,6 @@
 fit_RW_pav_alpha_gainloss_rho<-function(data, 
                             alphaBound, 
-                            alphaposBound,alphanegBound,
+                            alphagainBound,alphalossBound,
                             rhoBound, rhogainBound, rholossBound, initialV){
   
   #----------------------------------------------------------------------------#

@@ -1,5 +1,5 @@
 simulate_RW_pav_alpha_gainloss<-function (Data,alpha=NULL,  alphagain, 
-                                     alphpaloss, rho = NULL,
+                                     alphaloss, rho = NULL,
                                      rhogain = NULL, rholoss = NULL, initialV,
                                      lengthToSwitch = 60){
   #------------------------------------------------------------------------------#

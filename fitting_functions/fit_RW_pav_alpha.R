@@ -25,7 +25,7 @@ fit_RW_pav_alpha<-function(data,
   #         parameters of best fit
   #----------------------------------------------------------------------------#
   
-  X0<-c( runif(1),)
+  X0<-c( runif(1))
   LB<-c(alphaBound[1]) # lower boundary
   UB<-c(alphaBound[2]) 
 

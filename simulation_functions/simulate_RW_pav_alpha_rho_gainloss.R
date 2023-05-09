@@ -1,5 +1,5 @@
 simulate_RW_pav_alpha_rho_gainloss<-function (Data,alpha=NULL,  alphagain, 
-                                     alphpaloss, rho = NULL,
+                                     alphaloss, rho = NULL,
                                      rhogain = NULL, rholoss = NULL, initialV,
                                      lengthToSwitch = 60){
   #------------------------------------------------------------------------------#
@@ -68,14 +68,14 @@ simulate_RW_pav_alpha_rho_gainloss<-function (Data,alpha=NULL,  alphagain,
     
     # get the observation as 1 if that category is present, and 0 if it is not
     if (Data$switch_cond[t]=="reward" | Data$switch_cond[t]=="punTorew"){
-      rho<-rhogainloss
+      rho<-rhogain
       if ( Data$outcome[t]>0){
         Data$reward[t]<-1
       } else {
         Data$reward[t]<-0
       }
     } else{
-      rho<-rhogainloss
+      rho<-rholoss
       if ( Data$outcome[t]<0){
         Data$reward[t]<-0
       } else {

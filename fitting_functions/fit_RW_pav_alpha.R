@@ -1,7 +1,8 @@
 fit_RW_pav_alpha<-function(data, 
                             alphaBound, 
                             alphagainBound,alphalossBound,
-                            rhoBound, rhogainBound, rholossBound, initialV){
+                            rhoBound, rhogainBound, rholossBound, initialV,
+                           lengthToSwitch =60){
   
   #----------------------------------------------------------------------------#
   # This function finds the parameters that 
@@ -32,7 +33,8 @@ fit_RW_pav_alpha<-function(data,
   
   obfunc<-function(x) likelihood_RW_pav_alpha(Data = data, 
                                                        alpha = x[1] ,
-                                                    initialV=initialV, print = 1) # this function 
+                                                    initialV=initialV, print = 1,
+                                              lengthToSwitch =64) # this function 
   
   # is similar to the MATLAB "handle" function
   

@@ -1,4 +1,4 @@
-likelihood_RW_pav_alpha<-function (Data,alpha=NULL,  alphagain, 
+likelihood_RW_pav_alphapos_alphaneg<-function (Data,alpha=NULL,  alphagain, 
                                             alphaloss, rho = NULL, rhogain, rholoss,
                                             print, initialV,
                                             lengthToSwitch = 60){
@@ -60,12 +60,14 @@ likelihood_RW_pav_alpha<-function (Data,alpha=NULL,  alphagain,
     
     if (Data$switch_cond[t]=="reward" | Data$switch_cond[t]=="punTorew"){
       if ( Data$outcome[t]>0){
+        alpha<-alphagain
         Data$reward[t]<-1
       } else {
         Data$reward[t]<-0
       }
     } else{
       if ( Data$outcome[t]<0){
+        alpha<-alphaloss
         Data$reward[t]<-0
       } else {
         Data$reward[t]<-1

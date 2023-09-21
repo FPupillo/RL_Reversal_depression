@@ -42,7 +42,7 @@ for (model in list.files("fitting_functions")){
 
 model<-Args<-commandArgs(trailingOnly = T) 
 
-model<-"RW_pav_alpha_gainloss"
+model<-"RW_pav_alpha_gainloss_rho_gainloss"
 
 sim_model<-get(paste0("simulate_", model))
 fit_model<-get(paste0("fit_", model))

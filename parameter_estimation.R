@@ -35,7 +35,7 @@ for (model in list.files("fitting_functions")){
 
 model<-Args<-commandArgs(trailingOnly = T) 
 
-#model<-"RW_pav_alpha_gainloss"
+model<-"RW_pav_alphapos_alphaneg"
 
 fit_model<-get(paste0("fit_", model))
 
@@ -55,7 +55,6 @@ Parameters<-matrix(NA, nrow = length(files),ncol = length(param)+3 )
 
 colnames(Parameters)<-c("PartNum", param,  "BIC", "LogLikel") #names of the columns
 
-
 # create Bound
 for (p in param){
   
@@ -69,12 +68,9 @@ for (p in param){
   # boundaries
   assign(paste0(p, "Bound"), c(0,1))
   
-  
 }
   
 }
-
-
 
 # detect cores for runnning in parallel
 cores=detectCores()
@@ -123,7 +119,8 @@ dat<-foreach (j=1:length(files), .combine=rbind)  %dopar% {
                                       c_file$Symbol_left)
     
     #create the data outcome_proble
-    c_file$outcome_probe<-ifelse(c_file$symbol_highlighted=="ｲ" , 
+    c_file$outcome_probe<-ifelse(c_file$symbol_highlighted=="ｲ" |
+                                   c_file$symbol_highlighted=="ﾌ"  , 
                                 "symbol_left", "symbol_right")
     
     
@@ -142,11 +139,14 @@ dat<-foreach (j=1:length(files), .combine=rbind)  %dopar% {
           
           c_file$prediction[n]<-1 # positive prediction
           
-        } else {
+        } else if (c_file$key_resp_trial.keys[n]=="m"){
           
           c_file$prediction[n]<-0 # negative prediction
+        } else{
+          
+          c_file$key_resp_trial.keys[n]<-NA
+          
         }
-        
       #} else {
         
        # if (c_file$key_resp_trial.keys[n]=="c"){
@@ -173,7 +173,7 @@ dat<-foreach (j=1:length(files), .combine=rbind)  %dopar% {
       fit<-fit_model(data=c_file, alphaBound = alphaBound, alphagainBound = alphagainBound,
                                   alphalossBound = alphalossBound, rhoBound = rhoBound,
                                   rhogainBound = rhogainBound, rholossBound = rholossBound, 
-                                   initialV=0.5, lengthToSwitch = 64)
+                                   initialV=0.5, lengthToSwitch = 32)
 
       for (par in c(param, "BIC", "LL")) {
         

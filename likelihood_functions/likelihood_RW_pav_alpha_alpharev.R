@@ -1,4 +1,4 @@
-likelihood_RW_pav_alpha<-function (Data,alpha=NULL,  alphagain, 
+likelihood_RW_pav_alpha_alpharev<-function (Data,alpha=NULL,  alphagain, 
                                             alphaloss, rho = NULL, rhogain, rholoss,
                                             print, initialV,
                                             lengthToSwitch = 60){
@@ -71,6 +71,13 @@ likelihood_RW_pav_alpha<-function (Data,alpha=NULL,  alphagain,
         Data$reward[t]<-1
       }  
       
+    }
+    
+    
+    if (Data$switch_cond[t]=="rewTopun" | Data$switch_cond[t]=="punTorew"){
+      alpha<-alphagain
+    } else{
+      alpha<-alpha
     }
     
     # update values

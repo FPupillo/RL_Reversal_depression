@@ -46,7 +46,7 @@ likelihood_RW_pav_alpha_gainloss<-function (Data,alpha=NULL,  alphagain,
   for (t in 1:(lengthToSwitch*2)){
     
     # reset the V in the middle
-    if (t == lengthToSwitch+1){
+    if (t == lengthToSwitch+1 ){
       V<-rep(initialV, 2)
     }
     

@@ -1,0 +1,38 @@
+﻿key_resp_beginning.keys,key_resp_beginning.rt,participant,session,date,expName,psychopyVersion,OS,frameRate,key_resp_instr_behavior.keys,key_resp_instr_behavior.rt,key_resp_instr_scales.keys,key_resp_instr_scales.rt,key_resp_PANAS_1.keys,key_resp_PANAS_1.rt,key_resp_PANAS_test.keys,key_resp_PANAS_test.rt,trials_PANAS.thisRepN,trials_PANAS.thisTrialN,trials_PANAS.thisN,trials_PANAS.thisIndex,trials_PANAS.ran,adjective,posneg,panasnum,PANASLoop.thisRepN,PANASLoop.thisTrialN,PANASLoop.thisN,PANASLoop.thisIndex,PANASLoop.ran,OrderofScales.thisRepN,OrderofScales.thisTrialN,OrderofScales.thisN,OrderofScales.thisIndex,OrderofScales.ran,nRepsPANAS,nRepsBDI,nRepsSHAPS,nRepsSTAI,key_resp.keys,key_resp.rt,key_resp_instr_STAI_state_2.keys,key_resp_instr_STAI_state_2.rt,key_resp_STAI_state_test.keys,key_resp_STAI_state_test.rt,trials_STAI_state.thisRepN,trials_STAI_state.thisTrialN,trials_STAI_state.thisN,trials_STAI_state.thisIndex,trials_STAI_state.ran,text_STAI_state,control_STAI_state,Item_nr_STAI_state,rescore_STAI_state
+space,3.0872,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,space,1.3539,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,space,2.9825,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,space,12.2903,4,14.509,0,0,0,0,1,interested,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,5,6.5694,0,1,1,1,1,distressed,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,5,1.4345,0,2,2,2,1,excited,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.5108,0,3,3,3,1,upset,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,4,5.8028,0,4,4,4,1,strong,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.7505,0,5,5,5,1,guilty,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.2914,0,6,6,6,1,scared,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.0027,0,7,7,7,1,hostile,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,3,1.2992,0,8,8,8,1,enthusiastic,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,4,1.6536,0,9,9,9,1,proud,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,28.5202,0,10,10,10,1,irritable,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,4,1.4912,0,11,11,11,1,alert,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.2148,0,12,12,12,1,ashamed,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,4,1.4672,0,13,13,13,1,inspired,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,2,1.1714,0,14,14,14,1,nervous,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,4,1.1241,0,15,15,15,1,determined,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,4,1.287,0,16,16,16,1,attentive,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.1483,0,17,17,17,1,jittery,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,3,1.2192,0,18,18,18,1,active,pos,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,1,1.0996,0,19,19,19,1,afraid,neg,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,0,0,0,0,1,,,,,,,,,,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,0,0,0,0,1,1,0,0,0,,,,,,,,,,,,,,,
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,space,5.4512,space,4.8017,4,4.091,0,0,0,0,1,1. I feel calm.,0,1,1
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4,1.751,0,1,1,1,1,2. I feel secure.,0,2,1
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1.2045,0,2,2,2,1,3. I am tense.,0,3,0
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1.1007,0,3,3,3,1,4. I feel strained. ,0,4,0
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4,1.4297,0,4,4,4,1,5. I feel at ease.,0,5,1
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1.1161,0,5,5,5,1,6. I feel upset.,0,6,0
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,2.9705,0,6,6,6,1,7. I am presently worrying over possible misfortunes.,0,7,0
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,3,2.1024,0,7,7,7,1,8. I feel satisfied.,0,8,1
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,1.4843,0,8,8,8,1,9. I feel frightened.,0,9,0
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4,4.8684,0,9,9,9,1,10. I feel comfortable.,0,10,1
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4,1.4299,0,10,10,10,1,11. I feel self-confident.,0,11,1
+,,14,001,2023-09-27_12h20.57.653,Experiment_Tuerk,2022.2.4,Win32,60.2373351,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4,0.8227,0,11,11,11,1,12. I feel nervous.,0,12,0

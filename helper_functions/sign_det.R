@@ -11,10 +11,10 @@ sign_det<-function(df, sub_n){
   for (n in 1:nrow(df)){
     if (!is.na(df$Memory_cond[n])){
       if (df$Memory_cond[n] == "Old"){
-        if (df$key_resp.keys[n]>=4){
+        if (df$key_resp_memory_trials.keys[n]>=4){
           df$recog_acc[n]<- 1 }else{   df$recog_acc[n]<- 0}
       }else if(df$Memory_cond[n] == "New"){
-        if (df$key_resp.keys[n]<4){
+        if (df$key_resp_memory_trials.keys[n]<4){
           df$recog_acc[n]<- 1 }else{   df$recog_acc[n]<- 0}
       }
     }

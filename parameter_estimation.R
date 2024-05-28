@@ -35,20 +35,22 @@ for (model in list.files("fitting_functions")){
 
 model<-Args<-commandArgs(trailingOnly = T) 
 
-model<-"RW_pav_alphapos_alphaneg"
+#model<-"RW_pav_alphapos_alphaneg"
 
 fit_model<-get(paste0("fit_", model))
 
 # get the directory were the data are
-data_path<-"~/PowerFolders/Frankfurt_University/RL_reversal_depression/experiment_tuerk/data/"
+#data_path<-"~/PowerFolders/Frankfurt_University/RL_reversal_depression/experiment_tuerk/data/"
+data_path<-paste0("~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/data_RL_screen_scoring/")
 
 files<-list.files(data_path, pattern = ".csv")
 
 # delete the file with "participant" on it
-files<- files[!substring(files, 1, 11)=="PARTICIPANT"]
+#files<- files[!substring(files, 1, 11)=="PARTICIPANT"]
 
 # names of the parameters.
-param<-c("alpha", "alphagain", "alphaloss", "rho", 'rhogain','rholoss' )
+param<-c("alpha", 'alphapos', 'alphaneg', "alphagain",
+         "alphaloss", "rho", 'rhogain','rholoss' )
 
 # initialize matrix to store the parameters
 Parameters<-matrix(NA, nrow = length(files),ncol = length(param)+3 ) 
@@ -97,7 +99,8 @@ dat<-foreach (j=1:length(files), .combine=rbind)  %dopar% {
     
     # DEFINE PARAMETERs
     # delte parameters
-    for (p in c("participant", "fitalpha", "fitalphagain", "fitalphaloss",
+    for (p in c("participant", "fitalpha", "fitalphapos", "fitalphaneg",
+                "fitalphagain", "fitalphaloss",
                 "fitrho", "fitrhogain", "fitrholoss", "BIC", "LL")){
       assign((p),NA)
       
@@ -188,7 +191,7 @@ dat<-foreach (j=1:length(files), .combine=rbind)  %dopar% {
         }
       }
       
-      participant<-unique(c_file$participant)
+      ID<-unique(c_file$ID)
       
       BIC<- fit$BIC
       
@@ -200,11 +203,12 @@ dat<-foreach (j=1:length(files), .combine=rbind)  %dopar% {
       print(paste("completed est ", j))
       
       # get sub_n
- 
+      
       
       # sim_all[s, ]
 
-      Parameters<-c( participant, fitalpha, fitalphagain, 
+      Parameters<-c( ID, fitalpha, fitalphapos, fitalphaneg,
+                     fitalphagain, 
                      fitalphaloss,  fitrho, 
                      fitrhogain,  fitrholoss,  BIC, LL  )
       

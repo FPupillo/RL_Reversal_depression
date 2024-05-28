@@ -59,15 +59,15 @@ likelihood_RW_pav_alphapos_alphaneg<-function (Data,alpha=NULL,  alphagain,
     Data$currV[t]<-V[which_symb]
     
     if (Data$switch_cond[t]=="reward" | Data$switch_cond[t]=="punTorew"){
+      alpha<-alphagain
       if ( Data$outcome[t]>0){
-        alpha<-alphagain
         Data$reward[t]<-1
       } else {
         Data$reward[t]<-0
       }
     } else{
+      alpha<-alphaloss
       if ( Data$outcome[t]<0){
-        alpha<-alphaloss
         Data$reward[t]<-0
       } else {
         Data$reward[t]<-1

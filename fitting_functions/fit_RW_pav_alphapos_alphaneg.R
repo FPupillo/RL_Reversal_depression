@@ -31,7 +31,7 @@ fit_RW_pav_alphapos_alphaneg<-function(data,
   UB<-c(alphaBound[2], alphaBound[2]) 
 
   
-  obfunc<-function(x) likelihood_RW_pav_alpha(Data = data, 
+  obfunc<-function(x) likelihood_RW_pav_alphapos_alphaneg(Data = data, 
                                              alphagain = x[1] ,
                                                alphaloss = x[2],
                                                initialV=initialV, print = 1,
@@ -52,7 +52,7 @@ fit_RW_pav_alphapos_alphaneg<-function(data,
   BIC <- BICcompute(length(X0), ntrials, NegLL[[2]])
   
   # Prepare results for output
-  data <- list("alphapos" = NegLL[[1]][1], "alphapos" = NegLL[[1]][2],
+  data <- list("alphapos" = NegLL[[1]][1], "alphaneg" = NegLL[[1]][2],
                "logLikel" = LL,"BIC"= BIC)
 
   return(data)

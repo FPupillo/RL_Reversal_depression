@@ -31,6 +31,7 @@ files<-list.files(data_path, pattern = ".csv")
 all_data_mem<-list()
 all_data_long<-vector()
 
+
 # counter for the iterations
 counter<-1
 
@@ -79,6 +80,7 @@ for (f in files){
   for (n in 1:nrow(c_df_mem)){
     
     c_df_mem$Block_cond[n]<-c_learn_data$Block_cond[c_learn_data$Image == c_df_mem$Image[n]]
+    c_df_mem$Block_nr[n]<-c_learn_data$Block_nr[c_learn_data$Image == c_df_mem$Image[n]]
     c_df_mem$prediction_accuracy[n]<-c_learn_data$key_resp_trial.corr[c_learn_data$Image == c_df_mem$Image[n]]
     c_df_mem$Outcome[n]<-c_learn_data$Outcome[c_learn_data$Image == c_df_mem$Image[n]]
     c_df_mem$round[n]<-c_learn_data$round[c_learn_data$Image == c_df_mem$Image[n]]
@@ -98,11 +100,20 @@ for (f in files){
     
   }
   
-  var_sel<-c("ID", VoI, "Block_cond","prediction_accuracy", "prediction_accuracy" ,"round", "trial_num_round",
+  var_sel<-c("ID", VoI,"Block_nr", "Block_cond","prediction_accuracy", "prediction_accuracy" ,"round", "trial_num_round",
              "block_valence" , "valence" ,"key_resp_memory_trials.keys" ,
              "BDI_score", "SHAPS_score", "Outcome")
   
   c_df_mem<-c_df_mem[, var_sel]
+  
+  # create the trial number
+  c_df_mem$trial_num<-1:nrow(c_df_mem)
+  
+  # create trial num by round
+  # create round
+  c_df_mem$round<-ifelse(c_df_mem$Block_nr<3, 1, 2)
+  
+  c_df_mem$trial_num_round<-rep(1:64, times = 2)
   
   all_data_long<-rbind(all_data_long, c_df_mem)
   
@@ -121,6 +132,8 @@ all_df<-do.call(rbind, all_data_mem)
 # delet the rownames
 rownames(all_df)<-NULL
 
+# get block type
+all_data_long$block_type<-sub("\\_.*", "", all_data_long$Block_cond)
 #------------------------------------------------------------------------------#
 # get the cutoff for dprime
 # create the threshold for excluding participants through a permutation analysis
@@ -170,32 +183,84 @@ all_data_long_excl<-all_data_long[!all_data_long$ID %in% part_exc,]
 
 # 9 participants fall below the threshold
 #------------------------------------------------------------------------------#
+# create wide data
+wide_data<- all_data_long %>% 
+  group_by(ID, valence, block_type) %>%
+          dplyr::summarise(key_resp_memory_trials.keys = 
+                      mean(key_resp_memory_trials.keys))
+
+wide_data$excl<-ifelse(wide_data$ID %in% part_exc, 1, 0)
+# print
+write.csv(wide_data, "group_data/memory.csv", row.names = F)
 
 #------------------------------------------------------------------------------#
 # analyze memory hits
 # First, as a function of block
 custom_param<- function(){ theme(
-  plot.title = element_text(size = 40),
+  plot.title = element_text(size = 60),
   axis.title.x = element_text(size = 38),
-  axis.title.y = element_text(size = 28),
+  axis.title.y = element_text(size = 38),
   axis.text=element_text(size=28),
-  legend.text=element_text(size=rel(2)),
-  legend.title = element_text(size=rel(2)), 
-  strip.text.x = element_text(size=28)
+  legend.text=element_text(size=rel(5)),
+  legend.title = element_text(size=rel(5)), 
+  strip.text.x = element_text(size=50)
 )}
 
-# get block type
-all_data_long$block_type<-sub("\\_.*", "", all_data_long$Block_cond)
+
+# first, by trial num
+
+dat_summary_tr<- summarySEwithin(all_data_long_excl,
+                                     measurevar = "key_resp_memory_trials.keys",
+                                     withinvars = c("trial_num_round",  "block_valence") , 
+                                     idvar = "ID", 
+                                     na.rm = T)
+
+dat_summary_tr$trial_num_round<-as.numeric(dat_summary_tr$trial_num_round)
+ggplot(dat_summary_tr,
+       aes(x = trial_num_round, y = key_resp_memory_trials.keys, 
+           # this assigns the color to the group
+           color = block_valence, fill = block_valence, 
+           # this changes the line type as a funciton of group
+           #linetype = block_type, 
+           group = 1))+
+  stat_summary(fun.y="mean",geom="line", size = 1.5, show.legend = F)+
+  
+  # this add the shadow considering the within-participant standard error
+  geom_ribbon(aes(ymin=key_resp_memory_trials.keys-se, 
+                  ymax=key_resp_memory_trials.keys+se), alpha=0.5, colour=NA,
+              show.legend = F)+
+  # divide the plot as a funtion of age group
+  facet_wrap(.~block_valence)+
+  # customise the breaks
+  #scale_x_continuous(breaks=seq(1, 100, 19))+
+  
+  # add personalized colours
+  #scale_color_manual(values = c(c( "#AA4499" ,"#44AA99")))+
+  
+  theme(plot.title = element_text(hjust = 0.5))+
+  
+  geom_vline(xintercept=32)+
+  
+  # use the classic theme
+  theme_classic()+
+  # add personalized parmaeters
+  custom_param()+
+  xlab("Trial Number Per Round")+
+  ylab("Confidence-weighted Accuracy")
+  
+
+
+
 
 
 # now bars
-dat_summary<- summarySEwithin(all_data_long,
+dat_summary<- summarySEwithin(all_data_long_excl,
                                    measurevar = "key_resp_memory_trials.keys",
                                    withinvars = c("block_type",  "valence") , 
                                    idvar = "ID", 
                                    na.rm = T)
 
-ggplot(all_data_long %>%
+ggplot(all_data_long_excl %>%
          group_by(ID, block_type, valence)%>%
          dplyr::summarise(key_resp_memory_trials.keys=mean(key_resp_memory_trials.keys, na.rm=T)), 
        aes(x = valence, y = key_resp_memory_trials.keys, color = valence ))+
@@ -203,14 +268,14 @@ ggplot(all_data_long %>%
   
   # add a line that connect those points by participant
   geom_line( aes(valence, key_resp_memory_trials.keys ,group = ID),
-             size=1, alpha=0.1, stat="summary" , colour = 'black')+
+             size=1, alpha=0.1, stat="summary" , colour = 'black', show.legend = F)+
   # add a summary line (mean)
-  geom_point(stat="summary", size = 5, data = dat_summary)+
+  geom_point(stat="summary", size = 5, data = dat_summary, show.legend=F)+
   xlab("")+
   # add the within-participant confidence intervals
   geom_errorbar(aes( y = key_resp_memory_trials.keys, ymin = key_resp_memory_trials.keys - ci, 
                      ymax = key_resp_memory_trials.keys + ci),
-                width = 0.40,size = 1.5, data=dat_summary)+
+                width = 0.40,size = 1.5, data=dat_summary, show.legend=F)+
   # divide the plot as a function of age group
   facet_wrap(.~block_type)+
   theme_classic()+
@@ -223,10 +288,12 @@ ggplot(all_data_long %>%
 
 # analyze
 mod1<-lmer(key_resp_memory_trials.keys~block_type*valence +(block_type*valence|ID), 
-           data = all_data_long,
+           data = all_data_long_excl,
            control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=100000)) )
 
 Anova(mod1)
+
+summary(mod1)
 
 # only reversal
 mod1_rev_BDI<-lmer(key_resp_memory_trials.keys~valence*BDI_score+(valence|ID), 
@@ -274,4 +341,6 @@ mod1_rev_learn_neg<-lmer(key_resp_memory_trials.keys~prediction_accuracy*Outcome
                          control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=100000)) )
 
 anova(mod1_rev_learn_neg)
+
+
 

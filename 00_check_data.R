@@ -3,7 +3,7 @@
 # the different files
 # created "Thu Sep 21 11:10:52 2023"
 #------------------------------------------------------------------------------#
-
+ 
 rm(list=ls())
 
 library(dplyr)
@@ -208,14 +208,15 @@ dat_summary_fix_pr<- summarySEwithin(all_data_encoding,
                                      na.rm = T)
 
 custom_param<- function(){ theme(
-  plot.title = element_text(size = 40),
+  plot.title = element_text(size = 60),
   axis.title.x = element_text(size = 38),
-  axis.title.y = element_text(size = 28),
+  axis.title.y = element_text(size = 38),
   axis.text=element_text(size=28),
-  legend.text=element_text(size=rel(2)),
-  legend.title = element_text(size=rel(2)), 
-  strip.text.x = element_text(size=28)
+  legend.text=element_text(size=rel(5)),
+  legend.title = element_text(size=rel(5)), 
+  strip.text.x = element_text(size=50)
 )}
+
 
 dat_summary_fix_pr$trial_num_round<-as.numeric(dat_summary_fix_pr$trial_num_round)
 ggplot(dat_summary_fix_pr[dat_summary_fix_pr$trial_num_round<59,],
@@ -224,33 +225,36 @@ ggplot(dat_summary_fix_pr[dat_summary_fix_pr$trial_num_round<59,],
                               color = block_valence, fill = block_valence, 
                               # this changes the line type as a funciton of group
                               #linetype = block_type, 
-                              group = 1))+
-stat_summary(fun.y="mean",geom="line", size = 1.5)+
+                              group = 1), 
+       show.legend = F)+
+  stat_summary(fun.y="mean",geom="line", size = 1.5, show.legend = FALSE)+
   
 # this add the shadow considering the within-participant standard error
-  geom_ribbon(aes(ymin=cum_acc_window-se, ymax=cum_acc_window+se), alpha=0.5, colour=NA)+
+  geom_ribbon(aes(ymin=cum_acc_window-se, ymax=cum_acc_window+se), alpha=0.5, colour=NA,
+              show.legend = FALSE)+
   # divide the plot as a funtion of age group
   facet_wrap(.~block_valence)+
   # customise the breaks
   #scale_x_continuous(breaks=seq(1, 100, 19))+
   
   # add personalized colours
-  #scale_color_manual(values = c(c( "#AA4499" ,"#44AA99")))+
-  
-  # add personalized parmaeters
-  custom_param()+
-  
+  #scale_color_manual(values = c(c( "#AA4499" ,"#44AA99")))
+
   theme(plot.title = element_text(hjust = 0.5))+
   # use the classic theme
-  theme_classic()
+  theme_classic()+
+  xlab("Trial Number Per Round")+
+  ylab(" % Optimal Choice")+
+  # add personalized parmaeters
+  custom_param()
 
 
 #all_data_encoding$Trial_within_block<-as.numeric(all_data_practice$trial_num)
-ggplot(all_data_encoding, aes(x = trial_num_round, y = cum_acc_window , group=1))+
-  stat_summary(fun.y="mean",geom="line", size = 1.5)+
-  facet_wrap(block_type~.)  +
-  geom_vline(xintercept = c(32, 64, 96 ))+
-  theme_classic()
+# ggplot(all_data_encoding, aes(x = trial_num_round, y = cum_acc_window , group=1))+
+#   stat_summary(fun.y="mean",geom="line", size = 1.5)+
+#   facet_wrap(block_type~.)  +
+#   geom_vline(xintercept = c(32, 64, 96 ))+
+#   theme_classic()
 
 
 
@@ -264,19 +268,20 @@ dat_summary_pr_2<- summarySEwithin(all_data_encoding,
 ggplot(all_data_encoding %>%
          group_by(ID, block_type, valence)%>%
          dplyr::summarise(key_resp_trial.corr=mean(key_resp_trial.corr , na.rm=T)), 
-       aes(x = valence, y = key_resp_trial.corr, color = valence ))+
+       aes(x = valence, y = key_resp_trial.corr, color = valence , show.legend =F))+
   geom_point(alpha = 0.10, colour = "black" )+
 
   # add a line that connect those points by participant
   geom_line( aes(valence, key_resp_trial.corr ,group = ID),
              size=1, alpha=0.1, stat="summary" , colour = 'black')+
   # add a summary line (mean)
-  geom_point(stat="summary", size = 5, data = dat_summary_pr_2)+
+  geom_point(stat="summary", size = 5, data = dat_summary_pr_2 )+
   xlab("")+
   # add the within-participant confidence intervals
   geom_errorbar(aes( y = key_resp_trial.corr, ymin = key_resp_trial.corr - ci, 
                      ymax = key_resp_trial.corr + ci),
-                width = 0.40,size = 1.5, data=dat_summary_pr_2)+
+                width = 0.40,size = 1.5, data=dat_summary_pr_2, 
+                show.legend = F)+
   # divide the plot as a function of age group
   facet_wrap(.~block_type)+
   theme_classic()+
@@ -328,3 +333,4 @@ mod1BDI_rev<-glmer(key_resp_trial.corr~valence*BDI_score +(valence|ID), family =
 Anova(mod1BDI_rev)
 
 # extract the beta values for valence and correlate them with the BDI
+

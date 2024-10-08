@@ -17,6 +17,7 @@ source("helper_functions/cum_acc_window.R")
 
 # we are using the data that Stefanie said they have RL scoring above chance
 path_to_data<-"~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/data_RL_screen"
+path_to_data<-paste0(getwd(), "/data_RL_screen")
 
 # get the data 
 data_files<-list.files(path_to_data, pattern = ".csv")
@@ -37,6 +38,13 @@ quest<-read.csv(paste0(dirname(path_to_data), "/", "Output_scales_39.csv"))
 # loop through data, assign the correspondent BDI and SHAPS, and assign a 
 # progressive participant number
 
+# get a file only with the shaps
+shaps_all<-vector()
+# now let's calculate the output of the questionnaires again, to check if there
+# is a correlation between the scales
+
+new_quest<-vector()
+
 for (number in 1:length(data_files)){
   
   c_file_name<-data_files[number]
@@ -49,27 +57,93 @@ for (number in 1:length(data_files)){
   # now the .csv
   file_name<-gsub('.csv','',file_name)
   
+  
   # get the Shaps and BIDS
   c_quest<-quest[quest$participant == file_name,]
   
   # assign the BDI and the SHAPS
-  c_file$BDI_score<-c_quest$BDI_score
+  # c_file$BDI_score<-c_quest$BDI_score
+  # 
+  # c_file$SHAPS_score<-c_quest$SHAPS_score
+  # 
+  # c_file$PANAS_neg_score<-c_quest$PANAS_neg_score
+  # 
+  # c_file$PANAS_pos_score<-c_quest$PANAS_pos_score
+  # 
+  # # now the ID
+  # c_file$ID<-number
   
-  c_file$SHAPS_score<-c_quest$SHAPS_score
+  # get the shaps from the current file
+  c_SHAPS<-c_file$key_resp_SHAPS_test.keys[c_file$control_SHAPS==0]
   
-  c_file$PANAS_neg_score<-c_quest$PANAS_neg_score
+  c_SHAPS<-c_SHAPS[!is.na(c_SHAPS)]
   
-  c_file$PANAS_pos_score<-c_quest$PANAS_pos_score
+  # now the BDI
+  c_BDI<-c_file$key_resp_BDI_trials.keys
+  c_BDI<-c_BDI[!is.na(c_BDI)]
   
-  # now the ID
-  c_file$ID<-number
+  SHAPS<-sum(c_SHAPS)
+  BDI<-sum(c_BDI)
+  
+  # now the Panas
+  PANAS_pos<-sum(c_file$key_resp_PANAS_test.keys[c_file$posneg=="pos"] )
+  
+  PANAS_neg<-sum(c_file$key_resp_PANAS_test.keys[c_file$posneg=="neg"] )
+  
+  
+  # get thec_BDI# get the ID
+  ID<-substring <- sub(" .*", "", file_name)
+  
+  c_file$SHAPS_score<-SHAPS
+  c_file$BDI_score<-BDI
+  
+  c_file$PANAS_neg<-c_quest$PANAS_neg
+  c_file$PANAS_pos<-c_quest$PANAS_pos
+  
+  c_file$ID<-ID
+  
   
   # now save it
   write.csv(c_file, paste0(dirname(path_to_data), "/data_RL_screen_scoring/",
                    paste0(number, ".csv")), row.names = F)
   
+
+  
+  shaps_all<-rbind(shaps_all, as.data.frame(cbind(ID, c_SHAPS)))
+  
+  # new file for the questionnaire
+  new_quest<-rbind(new_quest, as.data.frame(cbind( ID, SHAPS, BDI, PANAS_pos)))
     
 }
+
+# plot the shaps all
+shaps_all$c_SHAPS<-as.numeric(shaps_all$c_SHAPS)
+ggplot(shaps_all, aes(x = c_SHAPS, fill = ID))+
+  geom_histogram()+
+  theme_classic()+
+  facet_wrap(.~ID)
+
+# now create the scatterplots
+new_quest$SHAPS<-as.numeric(new_quest$SHAPS)
+new_quest$BDI<-as.numeric(new_quest$BDI)
+new_quest$PANAS_pos<-as.numeric(new_quest$PANAS_pos)
+
+ggplot(data = new_quest, aes(x = SHAPS, y = BDI))+
+  geom_point(size = 1.5)+
+  geom_smooth(method = "lm")+
+  ggtitle("Correlation between SHAPS and BDI")+
+  theme_classic()
+
+# correlation between SHAPS and PANAS pos
+ggplot(data = new_quest, aes(x = SHAPS, y = PANAS_pos))+
+  geom_point(size = 1.5)+
+  geom_smooth(method = "lm")+
+  ggtitle("Correlation between SHAPS and pos PANAS")+
+  theme_classic()
+
+  
+  
+  
 #------------------------------------------------------------------------------#
 
 path_to_data2<-paste0(dirname(path_to_data), "/data_RL_screen_scoring/")

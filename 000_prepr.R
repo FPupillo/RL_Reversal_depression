@@ -59,8 +59,13 @@ for (dup in duplicates){
   file.remove(paste0("data_RL_screen/",c_file_name))
   
   # rename the participant's ID within that file as the current
-  # participants' ID +1
+  # participants' ID +1; except it is number 4.
+  # because we already have a number 5, we can assign number 3 
+  if (c_file$participant[1]==4){
+    c_file$participant<-c_file$participant[1]-1
+  } else{
   c_file$participant<-c_file$participant[1]+1
+  }
   
   # now we also want to rename the file with that ID
   c_file_postname<-sub(paste0( dup, "*") , "", c_file_name)

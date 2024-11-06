@@ -11,6 +11,7 @@ library(foreach)
 library(doParallel)
 library(viridis)
 library(gridExtra) # for plotting
+
 library(ggpubr)
 
 for (fun in list.files("helper_functions")){
@@ -33,7 +34,7 @@ for (model in list.files("fitting_functions")){
 }
 
 
-model<-Args<-commandArgs(trailingOnly = T) 
+model<-commandArgs(trailingOnly = T) 
 
 #model<-"RW_pav_alphapos_alphaneg"
 
@@ -41,7 +42,7 @@ fit_model<-get(paste0("fit_", model))
 
 # get the directory were the data are
 #data_path<-"~/PowerFolders/Frankfurt_University/RL_reversal_depression/experiment_tuerk/data/"
-data_path<-paste0("~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/data_RL_screen_scoring/")
+data_path<-paste0("data_RL_screen_scoring/")
 
 files<-list.files(data_path, pattern = ".csv")
 

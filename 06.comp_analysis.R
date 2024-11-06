@@ -9,11 +9,11 @@ library(lme4)
 library(reshape2)
 library(Hmisc)
 
-group_data<-read.csv("~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/group_data/all_data_encoding.csv")
-asym_data<-read.csv("~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/group_data/learning_asymmetries.csv")
-memory_data<-read.csv("~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/group_data/memory.csv")
+group_data<-read.csv("group_data/all_data_encoding.csv")
+asym_data<-read.csv("group_data/learning_asymmetries.csv")
+memory_data<-read.csv("group_data/memory.csv")
 # computational data
-computational_data<-read.csv("~/PowerFolders/Frankfurt_University/rev_aned_steffi_thesis/output_folder/parameter_estimation_RW_pav_alpha_gainloss_rho_gainloss.csv")
+computational_data<-read.csv("output_folder/parameter_estimation_RW_pav_alpha_gainloss_rho_gainloss.csv")
 
 # get learning rate asymmetry
 computational_data$gain_loss_asym<-computational_data$alphagain-
@@ -61,6 +61,7 @@ mod_BDI<-lmer(key_resp_memory_trials.keys~BDI*valence*block_type +(1|ID),
               data = memory_data[memory_data$excl==0,])
 
 anova(mod_BDI, type = 3)
+
 summary((mod_BDI))
 
 # only on reversal

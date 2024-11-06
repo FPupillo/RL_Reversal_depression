@@ -9,7 +9,7 @@ do
 
 echo $model
 
-Rscript parameter_estimation.R $model 
+Rscript parameter_estimation.R "$model"
 
 wait
 
